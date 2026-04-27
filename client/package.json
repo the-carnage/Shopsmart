@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "react": "^18.2.0",

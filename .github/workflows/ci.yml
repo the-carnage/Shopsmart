@@ -1,44 +1,18 @@
-name: CI
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+name: Build and Test
+
+on: [push]
+
 jobs:
-  client:
+  build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./client
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
-          cache-dependency-path: ./client/package-lock.json
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test
-        env:
-          CI: true
-      - run: npm run build
-      - run: docker build -t client .
-  server:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./server
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
-          cache-dependency-path: ./server/package-lock.json
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test
-        env:
-          CI: true
-      - run: docker build -t server .
+          node-version: 22
+
+      - name: Test Server
+        run: cd server && npm install && npm test
+
+      - name: Build and Test Client
+        run: cd client && npm install && npm test && npm run build

@@ -1,0 +1,36 @@
+{
+  "family": "shopsmart-task",
+  "networkMode": "bridge",
+  "containerDefinitions": [
+    {
+      "name": "shopsmart-app",
+      "image": "REPLACE_WITH_IMAGE",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5001,
+          "hostPort": 5001,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "5001"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/shopsmart",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
